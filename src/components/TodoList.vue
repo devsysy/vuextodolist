@@ -2,9 +2,12 @@
   <section>
     <ol>
       <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="i">
-        <input type="checkbox" @click="checkOk">
+        <input type="checkbox" v-bind:class="chkClass"
+               @click="checkOk" ref="chkLine">
         {{todoItem}}
-        <button type="text" v-bind:class="$store.state.chkClass" @click="removeTodo(todoItem, todoItem.index)">remove</button>
+        <button type="text"
+                v-bind:class="chkClass"
+                @click="removeTodo(todoItem, i)">remove</button>
       </li>
     </ol>
   </section>
@@ -15,19 +18,21 @@
     name: "TodoList",
     data(){
       return{
-
+        chkClass: '.chkClass'
       }
     },
-
-
     methods: {
-      removeTodo: function(){
-        this.$store.commit('removeTodo');
+      removeTodo: function(todoItem, i){
+        this.$store.commit('removeTodo',{todoItem, i});
       },
       checkOk(){
-        if(this.state.chkClass === true){
-          this.state.chkClass.style.color = 'red'
-        }
+        //console.log(this.$refs)
+        console.log(this.chkClass.checked)
+        /*if(this.chkClass.checked === true){
+
+          //this.$refs.chkLine.style.textDecoration = 'overLine'
+        }*/
+
       }
     }
   }

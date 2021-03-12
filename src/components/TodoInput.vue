@@ -1,6 +1,9 @@
 <template>
   <div>
-    <input type="text" placeholder="What to do today?" v-model="$store.state.newTodoItem" v-on:keyup.enter="addTodo" autofocus>
+    <input
+        type="text"
+        placeholder="What to do today?"
+        v-model="newTodoItem" v-on:keyup.enter="addTodo" autofocus>
     <button type="text" @click="addTodo">List Add</button>
   </div>
 </template>
@@ -10,16 +13,16 @@
     name: "TodoInput",
     data(){
       return{
-
+        newTodoItem: '',
       }
     },
     methods: {
       addTodo: function(){
-        this.$store.commit('addTodo', this.$store.state.newTodoItem);
+        this.$store.commit('addTodo', this.newTodoItem);
         this.clearInput();
       },
       clearInput(){
-        this.$store.state.newTodoItem = '';
+        this.newTodoItem = '';
       }
     }
   }

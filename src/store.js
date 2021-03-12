@@ -6,20 +6,17 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         todoItems: [],
-        newTodoItem: '',
         todoListNum: 1,
-        chkClass: '.chkClass'
-
-
     },
     getters: {
 
     },
     mutations: {
         addTodo(state, payload){
-            if(state.newTodoItem !== ''){
+            if(this.newTodoItem !== '' ){
                 state.todoItems.push(payload)
             }else{
+                this.newTodoItem.preventDefault()
                 alert('Nothing to do today?!')
             }
         },
@@ -27,15 +24,14 @@ export const store = new Vuex.Store({
             state.conFirm = confirm("Would you like to cancel? Really??!!??")
 
             if(state.conFirm === true){
-                state.todoItems.splice(index,1)
+                state.todoItems.splice(index.i,1)
             }
         },
         clearAll(state){
-            state.conFirm = confirm("Are you sure you want to delete all?")
-            console.log(state)
+            this.conFirm = confirm("Are you sure you want to delete all?")
 
-            if(state.conFirm === true){
-                state.todoItems.length = 0
+            if(this.conFirm === true){
+                state.todoItems.splice(0, 10000)
 
             }
 
