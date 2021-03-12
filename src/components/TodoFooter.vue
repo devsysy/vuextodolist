@@ -1,6 +1,7 @@
 <template>
   <footer>
-    <button type="reset" @click="clearAll($store.state.todoItems)">Clear All</button>
+    <button type="reset"
+            @click="clearAll()">Clear All</button>
   </footer>
 </template>
 
@@ -14,7 +15,7 @@
     },
     methods: {
       clearAll: function(){
-        this.$store.commit('clearAll', this.$store.state.todoItems.length)
+        this.$store.commit('clearAll')
       }
     }
   }
