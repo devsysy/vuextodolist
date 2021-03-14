@@ -30,7 +30,7 @@
           console.log(this.$refs.chkValue[i]) //input checkbox
           console.log(todoItem)
           console.log(this.$refs.chkValue[i].value)
-          ``
+
           this.$refs.chkValue[i].style.color = 'red'
         }
       }
