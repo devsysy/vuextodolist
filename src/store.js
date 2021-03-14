@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         todoItems: [],
-        todoListNum: 1,
     },
     getters: {
 
