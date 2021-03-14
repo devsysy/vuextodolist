@@ -1,15 +1,16 @@
 <template>
   <section>
-    <ol>
+    <ul>
       <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="i">
-        <input type="checkbox" v-bind:class="chkClass"
-               @click="checkOk" ref="chkLine">
+        <input type="checkbox"
+               ref="chkValue"
+               @click="chkBtn(todoItem, i)">
+        {{i+1+'.'}}
         {{todoItem}}
         <button type="text"
-                v-bind:class="chkClass"
                 @click="removeTodo(todoItem, i)">remove</button>
       </li>
-    </ol>
+    </ul>
   </section>
 </template>
 
@@ -18,26 +19,24 @@
     name: "TodoList",
     data(){
       return{
-        chkClass: '.chkClass'
       }
     },
     methods: {
       removeTodo: function(todoItem, i){
         this.$store.commit('removeTodo',{todoItem, i});
       },
-      checkOk(){
-        //console.log(this.$refs)
-        console.log(this.chkClass.checked)
-        /*if(this.chkClass.checked === true){
-
-          //this.$refs.chkLine.style.textDecoration = 'overLine'
-        }*/
-
+      chkBtn(todoItem, i){
+        if(this.$refs.chkValue[i].checked === true){
+          //console.log(this.$refs.chkValue[i])
+          console.log(this.$refs.chkValue.todoItem[i].value)
+          //this.$refs.chkValue[i].todoItem.value.style.color = 'red'
+          this.$refs.chkValue[i].style.color = 'red'
+        }
       }
     }
   }
 </script>
 
 <style scoped>
-
+  li{list-style: none;}
 </style>
