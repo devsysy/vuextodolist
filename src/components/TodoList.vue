@@ -27,9 +27,10 @@
       },
       chkBtn(todoItem, i){
         if(this.$refs.chkValue[i].checked === true){
-          //console.log(this.$refs.chkValue[i])
-          console.log(this.$refs.chkValue.todoItem[i].value)
-          //this.$refs.chkValue[i].todoItem.value.style.color = 'red'
+          console.log(this.$refs.chkValue[i]) //input checkbox
+          console.log(todoItem)
+          console.log(this.$refs.chkValue[i].value)
+          ``
           this.$refs.chkValue[i].style.color = 'red'
         }
       }
