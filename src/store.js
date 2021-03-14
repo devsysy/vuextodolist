@@ -15,8 +15,8 @@ export const store = new Vuex.Store({
             if(this.newTodoItem !== '' ){
                 state.todoItems.push(payload)
             }else{
-                this.newTodoItem.preventDefault()
                 alert('Nothing to do today?!')
+                this.newTodoItem.preventDefault()
             }
         },
         removeTodo(state, index){
