@@ -17,8 +17,13 @@
       }
     },
     methods: {
-      addTodo: function(){
-        this.$store.commit('addTodo', this.newTodoItem);
+      addTodo: function(n){
+        if(this.newTodoItem.trim() !== '' ){
+          this.$store.state.todoItems.push(this.newTodoItem)
+          n.preventDefault()
+        }else{
+          alert('Nothing to do today?!')
+        }
         this.clearInput();
       },
       clearInput(){

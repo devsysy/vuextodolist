@@ -1,7 +1,7 @@
 <template>
   <section>
     <ul>
-      <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="i">
+      <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="i" ref="chkValue2">
         <input type="checkbox"
                ref="chkValue"
                @click="chkBtn(todoItem, i)">
@@ -27,13 +27,11 @@
       },
       chkBtn(todoItem, i){
         if(this.$refs.chkValue[i].checked === true){
-          console.log(this.$refs.chkValue[i]) //input checkbox
-          console.log(todoItem)
-          console.log(this.$refs.chkValue[i].value)
-
-          this.$refs.chkValue[i].style.color = 'red'
+          this.$refs.chkValue2[i].style.textDecoration="line-through";
+        }else{
+          this.$refs.chkValue2[i].style.textDecoration="none";
         }
-      }
+      },
     }
   }
 </script>

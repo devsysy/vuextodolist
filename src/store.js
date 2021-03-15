@@ -11,14 +11,7 @@ export const store = new Vuex.Store({
 
     },
     mutations: {
-        addTodo(state, payload){
-            if(this.newTodoItem !== '' ){
-                state.todoItems.push(payload)
-            }else{
-                alert('Nothing to do today?!')
-                this.newTodoItem.preventDefault()
-            }
-        },
+
         removeTodo(state, index){
             state.conFirm = confirm("Would you like to cancel? Really??!!??")
 
