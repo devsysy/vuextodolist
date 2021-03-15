@@ -12,6 +12,7 @@ import TodoInput from "@/components/TodoInput";
 import TodoList from "@/components/TodoList";
 import TodoFooter from "@/components/TodoFooter";
 
+
 export default {
   name: 'App',
   components: {
@@ -28,6 +29,6 @@ export default {
 </script>
 
 <style>
-#app {
-}
+#app li{list-style: none;}
+
 </style>

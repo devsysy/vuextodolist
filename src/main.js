@@ -6,7 +6,6 @@ import VueMoment from 'vue-moment'
 Vue.config.productionTip = false
 Vue.use(VueMoment)
 
-
 new Vue({
   store: store,
   render: h => h(App),
