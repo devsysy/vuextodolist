@@ -28,11 +28,11 @@
         chkOnchk: 'checked'
       }
     },
-    computed: {
+    /*computed: {
       todoItemChk: function(){
-        
+
       }
-    },
+    },*/
     computed: {
       todoItemClasses: function(){
         return{
