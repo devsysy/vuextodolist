@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
   export default {
     name: "TodoInput",
     data(){
@@ -16,13 +18,18 @@
         newTodoItem: '',
       }
     },
-
+    computed:{
+      ...mapState({
+        todoItemsUnSuccess: 'todoItemsUnSuccess'
+      })
+    },
     methods: {
       addTodo: function(n){
-        const today = this.$moment().format('YYYY-MM-DD hh:mm:ss');
+        const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');
 
         if(this.newTodoItem !== '' ){
-          this.$store.state.todoItems.unshift(this.newTodoItem + '작성일자:' + today)
+          //this.todoItemsUnSuccess.unshift(this.newTodoItem + '작성일자:' + today)
+          this.todoItemsUnSuccess.commit('addTodo', this.newTodoItem + '작성일자:' + today)
           n.preventDefault()
         }else{
           alert('Nothing to do today?!')

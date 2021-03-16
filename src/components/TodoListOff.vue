@@ -1,10 +1,26 @@
 <template>
   <section>
     <h5>{{message}}</h5>
+    <!-- 미완료 -->
     <ul>
-      <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="todoItem.i">
+      <li v-for="(todoItem, i) in todoItemsUnSuccess" v-bind:key="i">
         <input type="checkbox"
-               @change="chkTodoToggle(checked)" v-model="checked">
+               @change="chkTodoToggle(i)" v-model="todoItemsUnSuccess[i].checked">
+        {{ i+1+'.'}}
+        <span class="styleClass"
+              :class="{active: isActive}"
+              @click="todoStyle(isActive)">
+          {{todoItem}}
+        </span>
+        <span class="alert">{{todoResult}}</span>
+        <button>arrow</button>
+      </li>
+    </ul>
+    <!-- 완료 -->
+    <ul>
+      <li v-for="(todoItem, i) in todoItemsUnSuccess" v-bind:key="i">
+        <input type="checkbox"
+               @change="chkTodoToggle(checked)" v-model="todoItem[i].checked">
         {{ i+1+'.'}}
         <span class="styleClass"
               :class="{active: isActive}"
@@ -20,30 +36,32 @@
 
 <script>
 
+import {mapState} from "vuex";
+
 export default {
   name: "TodoListOff",
   data(){
     return{
       message: ': 미완료',
       isActive: false,
-      checked: false,
-      chkValue: { chkTrue : '완료', chkFalse : '미완료' },
       todoResult: ''
     }
   },
+  computed:{
+    ...mapState({
+      todoItemsUnSuccess: 'todoItemsUnSuccess',
+    })
+  },
   methods:{
     todoStyle(){
-      //console.log('dddd')
       this.isActive = !this.isActive
     },
-    chkTodoToggle(){
-      //console.log(this.checked) //false 초기값 체크 안되게 하기 위해 true
-      if(!this.checked){
-        //console.log( )
-        this.todoResult = this.chkValue.chkFalse
-        //this.$store.commit('todoListComponent', this.todoResult)
+    chkTodoToggle(i){
+      if(this.todoItemsUnSuccess[i].checked === true){
+        console.log(true)
+
       }else{
-        this.todoResult = this.chkValue.chkTrue
+        console.log(false)
       }
     }
   }

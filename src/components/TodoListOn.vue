@@ -1,8 +1,9 @@
+<!--
 <template>
   <section>
     <h5>{{demo}}</h5>
     <ul>
-      <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="i">
+      <li v-for="(todoItem, i) in todoItemsSuccess" v-bind:key="i">
         <input type="checkbox"
                @click="chkTodoToggle(checked)" v-model="checked">
         {{i+1+'.'}}
@@ -17,6 +18,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "TodoListOn",
   data() {
@@ -27,6 +30,11 @@ export default {
       checked: false,
       todoItems2: []
     }
+  },
+  computed:{
+    ...mapState({
+      todoItemsSuccess: 'todoItemsSuccess',
+    })
   },
   /*computed:{
     styleObject(){
@@ -54,4 +62,4 @@ export default {
 
 <style scoped>
   .active{ text-decoration: line-through; }
-</style>
+</style>-->
