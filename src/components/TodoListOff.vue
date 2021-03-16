@@ -40,7 +40,7 @@ export default {
       if(!this.checked){
         //console.log( )
         this.todoResult = this.chkValue.chkFalse
-        this.$store.commit('todoListComponent', this.todoResult)
+        //this.$store.commit('todoListComponent', this.todoResult)
       }else{
         this.todoResult = this.chkValue.chkTrue
       }
