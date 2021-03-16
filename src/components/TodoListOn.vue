@@ -1,8 +1,8 @@
 <template>
   <section>
-    <h3>{{demo}}</h3>
+    <h5>{{demo}}</h5>
     <ul>
-      <li v-for="(todoItem, i) in todoItems2" v-bind:key="i">
+      <li v-for="(todoItem, i) in $store.state.todoItems" v-bind:key="i">
         <input type="checkbox"
                @click="chkTodoToggle(checked)" v-model="checked">
         {{i+1+'.'}}
@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       //textDecorationLine: 'line-through',
-      demo: '완료',
+      demo: ': 완료',
       isActive: false,
       checked: false,
       todoItems2: []

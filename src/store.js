@@ -11,7 +11,9 @@ export const store = new Vuex.Store({
 
     },
     mutations: {
-
+        todoListComponent: (state, payload) => {
+            state.todoItems = payload.value
+        },
         removeTodo(state, index){
             state.conFirm = confirm("Would you like to cancel? Really??!!??")
 
