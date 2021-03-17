@@ -3,7 +3,7 @@
     <input
         type="text"
         placeholder="What to do today?"
-        v-model.trim="newTodoItem" v-on:keyup.enter="addTodo" autofocus>
+        v-model.trim="newTodoItem" v-on:keyup.enter="addTodoInput" autofocus>
     <button type="text" @click="addTodoInput">List Add</button>
   </div>
 </template>
