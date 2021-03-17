@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import TodoListOn from "./TodoListOn";
 import TodoListOff from "./TodoListOff";
+import TodoListOn from "./TodoListOn";
 
   export default {
     name: "TodoList",

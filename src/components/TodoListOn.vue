@@ -1,65 +1,62 @@
-<!--
 <template>
   <section>
-    <h5>{{demo}}</h5>
+    <h5>{{message}}</h5>
+    <!-- 완료 -->
     <ul>
       <li v-for="(todoItem, i) in todoItemsSuccess" v-bind:key="i">
-        <input type="checkbox"
-               @click="chkTodoToggle(checked)" v-model="checked">
-        {{i+1+'.'}}
+        <input type="checkbox" v-model="chkBool[i]" @change="chkChange(i)">
+        {{ i+1+'.'}}
         <span class="styleClass"
               :class="{active: isActive}"
               @click="todoStyle(isActive)">
           {{todoItem}}
         </span>
+        <span class="alert">{{todoResult}}</span>
+        <button>arrow</button>
       </li>
     </ul>
   </section>
 </template>
 
 <script>
-import { mapState } from "vuex";
+
+import {mapState, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "TodoListOn",
   data() {
     return {
-      //textDecorationLine: 'line-through',
-      demo: ': 완료',
+      message: ': 완료',
       isActive: false,
-      checked: false,
-      todoItems2: []
+      todoResult: '',
+
     }
   },
-  computed:{
+  computed: {
     ...mapState({
-      todoItemsSuccess: 'todoItemsSuccess',
-    })
+      chkBool: 'chkBool'
+    }),
+    ...mapGetters({
+      todoItemsSuccess : 'todoItemsSuccess'
+    }),
   },
-  /*computed:{
-    styleObject(){
-      return{
-        lineThrough: this.isActive,
-        lineNo: !this.isActive,
-      }
-    }
-  },*/
-  methods:{
-    todoStyle(){
+
+  methods: {
+    ...mapMutations({
+      chkTodo: 'chkTodo'
+    }),
+    todoStyle() {
       this.isActive = !this.isActive
     },
-    chkTodoToggle(){
-      console.log(this.checked)
-      if(!this.checked){
-        console.log('오늘 할일 완료로 넘어가기!')
-      }else{
-        console.log('오늘 할일 미완료 this.stay!')
-      }
+    chkChange(e){
+      this.chkTodo(e)
     }
   }
 }
+
 </script>
 
 <style scoped>
-  .active{ text-decoration: line-through; }
-</style>-->
+.active{ text-decoration: line-through; }
+.alert{ color: hotpink; }
+</style>

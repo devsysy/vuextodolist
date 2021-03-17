@@ -6,37 +6,39 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        todoItemsSuccess: [],
-        todoItemsUnSuccess: [],
+        todoUnSuccess: [], //배열 리터럴
+        todoSuccess: [],
+        chkBool: []
     },
     getters: {
-        /*todoItemsUnSuccess: state => state.todoItemsUnSuccess,
-        todoItemsSuccess: state => state.todoItemsSuccess,*/
+        todoItemsUnSuccess: state => state.todoUnSuccess,
+        todoItemsSuccess: state => state.todoSuccess,
     },
     mutations: {
         addTodo(state, payload){
-            state.todoItemsUnSuccess.push(payload)
-        },
-        /*todoListComponent: (state, payload) => {
-            state.todoItemsUnSuccess = payload.value
-        },
-        removeTodo(state, index){
-            state.conFirm = confirm("Would you like to cancel? Really??!!??")
+            //state.todoUnSuccess.push(payload)
+            //state.todoUnSuccess.unshift(payload)
+            state.todoUnSuccess = [...state.todoUnSuccess, payload]
 
-            if(state.conFirm === true){
-                state.todoItemsUnSuccess.splice(index, 1)
+        },
+        chkTodo(state, payload){
+            //console.log(state.chkBool)
+            console.log(state.chkBool[payload])
+            //console.log(state.todoUnSuccess.shift(payload))
+
+            if(state.chkBool[payload] === true){
+                state.chkBool[payload] = false
+                //state.todoUnSuccess.shift(payload)
+                state.todoSuccess.unshift(payload)
             }
-        },*/
+        },
         clearAll(state){
             this.conFirm = confirm("Are you sure you want to delete all?")
 
             if(this.conFirm === true){
                 state.todoItemsUnSuccess.splice(0, 10000)
-
             }
-
         }
-
     },
     actions: {
 

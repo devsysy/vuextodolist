@@ -4,12 +4,12 @@
         type="text"
         placeholder="What to do today?"
         v-model.trim="newTodoItem" v-on:keyup.enter="addTodo" autofocus>
-    <button type="text" @click="addTodo">List Add</button>
+    <button type="text" @click="addTodoInput">List Add</button>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations } from "vuex";
 
   export default {
     name: "TodoInput",
@@ -18,18 +18,16 @@ import { mapState } from "vuex";
         newTodoItem: '',
       }
     },
-    computed:{
-      ...mapState({
-        todoItemsUnSuccess: 'todoItemsUnSuccess'
-      })
-    },
     methods: {
-      addTodo: function(n){
+      ...mapMutations({
+        addTodo : 'addTodo'
+      }),
+      addTodoInput: function(n){
         const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');
 
-        if(this.newTodoItem !== '' ){
-          //this.todoItemsUnSuccess.unshift(this.newTodoItem + '작성일자:' + today)
-          this.todoItemsUnSuccess.commit('addTodo', this.newTodoItem + '작성일자:' + today)
+
+        if(this.newTodoItem !== ''){
+          this.addTodo(this.newTodoItem + '작성일자' + today)
           n.preventDefault()
         }else{
           alert('Nothing to do today?!')
