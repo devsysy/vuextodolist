@@ -3,15 +3,15 @@
     <h5>{{message}}</h5>
     <!-- 완료 -->
     <ul>
-      <li v-for="(todoItem, i) in todoItemsSuccess" v-bind:key="i">
-        <input type="checkbox" v-model="chkBool[i]" @change="chkChange(i)">
-        {{ i+1+'.'}}
+      <li v-for="(todoItem, index) in todoItemsSuccess" v-bind:key="index">
+        <input type="checkbox" v-model="todoItem.todoBool">
+        {{ todoItem.todoId + '.' }}
         <span class="styleClass"
-              :class="{active: isActive}"
-              @click="todoStyle(isActive)">
-          {{todoItem}}
+              :class="[{active: todoActive}]"
+              @click="unDecoTodo({index})">
+          {{ todoItem.todoYou }}
         </span>
-        <span class="alert">{{todoResult}}</span>
+        {{ todoItem.todoDate}}
         <button>arrow</button>
       </li>
     </ul>
@@ -20,37 +20,28 @@
 
 <script>
 
-import {mapState, mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 
 export default {
   name: "TodoListOn",
   data() {
     return {
       message: ': 완료',
-      isActive: false,
-      todoResult: '',
-
     }
   },
   computed: {
     ...mapState({
-      chkBool: 'chkBool'
+      count: 'count',
+      todoActive: 'todoActive'
     }),
     ...mapGetters({
       todoItemsSuccess : 'todoItemsSuccess'
     }),
   },
-
   methods: {
     ...mapMutations({
-      chkTodo: 'chkTodo'
+      unDecoTodo: 'unDecoTodo'
     }),
-    todoStyle() {
-      this.isActive = !this.isActive
-    },
-    chkChange(e){
-      this.chkTodo(e)
-    }
   }
 }
 

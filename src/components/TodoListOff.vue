@@ -3,15 +3,14 @@
     <h5>{{message}}</h5>
     <!-- 미완료 -->
     <ul>
-      <li v-for="(todoItem, i) in todoItemsUnSuccess" v-bind:key="i">
-        <input type="checkbox" v-model="chkBool[i]" @change="chkChange(i)">
-        {{ i+1+'.'}}
-        <span class="styleClass"
-              :class="{active: isActive}"
-              @click="todoStyle(isActive)">
-          {{todoItem}}
+      <li v-for="(todoItem, index) in todoItemsUnSuccess" v-bind:key="index">
+        <input type="checkbox" v-model="todoItem.todoBool">
+        {{ todoItem.todoId + '.' }}
+        <span class="todo styleClass"
+              @click="decoTodo({index})">
+          {{ todoItem.todoYou }}
         </span>
-        <span class="alert">{{todoResult}}</span>
+        {{ todoItem.todoDate}}
         <button>arrow</button>
       </li>
     </ul>
@@ -27,36 +26,36 @@ export default {
   data() {
     return {
       message: ': 미완료',
-      isActive: false,
-      todoResult: '',
+
 
     }
   },
   computed: {
     ...mapState({
-      chkBool: 'chkBool'
+      count: 'count'
     }),
     ...mapGetters({
       todoItemsUnSuccess : 'todoItemsUnSuccess',
     }),
   },
-
   methods: {
     ...mapMutations({
-      chkTodo: 'chkTodo'
+      decoTodo: 'decoTodo'
     }),
-    todoStyle() {
-      this.isActive = !this.isActive
-    },
-    chkChange(e){
-      this.chkTodo(e)
-    }
+    // todoChkLine(r, i) {
+    //   this.decoTodo({r, i})
+    // }
   }
 }
 
 </script>
 
 <style scoped>
+.todo {
+  display: inline-block;
+  width: 100px;
+  border: 1px solid cadetblue;
+}
   .active{ text-decoration: line-through; }
   .alert{ color: hotpink; }
 </style>

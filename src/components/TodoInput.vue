@@ -3,13 +3,14 @@
     <input
         type="text"
         placeholder="What to do today?"
-        v-model.trim="newTodoItem" v-on:keyup.enter="addTodoInput" autofocus>
-    <button type="text" @click="addTodoInput">List Add</button>
+        v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>
+    <button type="button" @click.prevent="addTodoInput">List Add</button>
+    <button type="button" @click.prevent="chkChange">Delete</button>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import {mapMutations, mapState} from "vuex";
 
   export default {
     name: "TodoInput",
@@ -18,16 +19,27 @@ import { mapMutations } from "vuex";
         newTodoItem: '',
       }
     },
+    computed: {
+      ...mapState({
+        count: 'count',
+      })
+    },
     methods: {
       ...mapMutations({
-        addTodo : 'addTodo'
+        addTodo : 'addTodo',
+        chkTodo : 'chkTodo'
       }),
       addTodoInput: function(n){
         const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');
 
-
         if(this.newTodoItem !== ''){
-          this.addTodo(this.newTodoItem + '작성일자' + today)
+          this.addTodo({
+            todoId: this.count,
+            todoYou: this.newTodoItem,
+            todoDate: today,
+            todoBool: false,
+            todoStyle: false,
+          })
           n.preventDefault()
         }else{
           alert('Nothing to do today?!')
@@ -36,6 +48,9 @@ import { mapMutations } from "vuex";
       },
       clearInput(){
         this.newTodoItem = '';
+      },
+      chkChange(){
+        this.chkTodo()
       }
     }
   }
