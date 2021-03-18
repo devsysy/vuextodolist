@@ -24,7 +24,7 @@ export const store = new Vuex.Store({
 
         },
         decoTodo(state, payload){
-            console.log(payload)
+            console.log(payload+'메롱')
             console.log(state.todoUnSuccess[payload.index].todoStyle);
             // console.log(state.todoItemsUnSuccess[payload.index].todoStyle)
             //state.todoActive = !state.todoActive
