@@ -9,51 +9,70 @@ export const store = new Vuex.Store({
         count: 1,
         todoUnSuccess: [], //배열 리터럴
         todoSuccess: [],
-        //todoActive: false
-
+        hiddenOk: false,
+        todoDone: false,
     },
     getters: {
         todoItemsUnSuccess: state => state.todoUnSuccess,
         todoItemsSuccess: state => state.todoSuccess,
-        //todoUnSuccess: state => state.todoUnSuccess
+        //todoItemsFirst: state => state.todoUnSuccess.todoBool
+        //todoChkCount: state => state.todoUnSuccess.find(todoId => state.todoUnSuccess.todoId)
     },
     mutations: {
         addTodo(state, payload){
             state.count ++
             state.todoUnSuccess = [payload, ...state.todoUnSuccess]
-
         },
+
         decoTodo(state, payload){
-            console.log(payload+'메롱')
-            console.log(state.todoUnSuccess[payload.index].todoStyle);
-            // console.log(state.todoItemsUnSuccess[payload.index].todoStyle)
-            //state.todoActive = !state.todoActive
-            //
-            // if(state.todoItemsUnSuccess[payload.index].todoStyle === true){
-            //     //console.log(state.chkBool[payload])
-            //     state.todoSuccess = [...state.todoSuccess, state.todoUnSuccess[payload.index]]
-            //
-            //     const idx = state.todoUnSuccess.indexOf(state.todoUnSuccess[payload.index])
-            //     //console.log(...state.todoUnSuccess.splice(state.todoUnSuccess[payload], 1))
-            //     //console.log(...state.todoUnSuccess)
-            //     state.todoUnSuccess.splice(idx, 1)
-            //     //파괴적 함수, 비파괴적 함수
-            // }
+            state.todoUnSuccess[payload.index].todoStyle = true
+            //state.todoUnSuccess[payload.index].todoDone = '완료'
+            //console.log(state.todoUnSuccess[payload.index].todoStyle)
+
+            state.todoSuccess = [state.todoUnSuccess[payload.index], ...state.todoSuccess]
+            //const idx = state.todoUnSuccess.indexOf(state.todoUnSuccess[payload.index].todoId, 1)
+            //console.log(state.todoUnSuccess.splice(idx, 1))
+            state.todoUnSuccess.splice(payload.index,1)
+            //console.log(state.todoUnSuccess.splice(payload.index,1))
         },
         unDecoTodo(state, payload){
-            console.log(payload)
-            /*const idx2 = state.todoSuccess.indexOf(state.todoSuccess[payload.index])
-            //console.log(state.todoSuccess.indexOf(state.todoSuccess[payload.index]))
-            console.log(state.todoSuccess)
-            state.todoSuccess = [...state.todoSuccess, state.todoSuccess.splice((idx2), 1)]*/
+            state.todoSuccess[payload.index].todoStyle = false
+            //state.todoSuccess[payload.index].todoDone = '미완료'
+            //console.log(state.todoUnSuccess[payload.index].todoStyle)
+
+            state.todoUnSuccess = [state.todoSuccess[payload.index], ...state.todoUnSuccess]
+
+            state.todoSuccess.splice(payload.index,1)
         },
+
         chkTodo(state, payload){
+            //체크 => 완료/미완료
             console.log(payload)
+            console.log(state.todoDone)
+            state.todoDone = !state.todoDone
+            //state.todoUnSuccess[payload].todoDone = '완료'
+
+            console.log(state.todoDone)
+            if(state.todoDone){
+                state.todoUnSuccess[payload].todoDone = '완료'
+            }else{
+                state.todoUnSuccess[payload].todoDone ='미완료'
+            }
+            /*if(state.todoDone){
+                state.todoSuccess[payload].todoDone = '완료'
+            }else{
+                state.todoSuccess[payload].todoDone ='미완료'
+            }*/
+
+        },
+        todoUpBtn(state){
+            console.log(state.todoUnSuccess)
+        },
+        todoDownBtn(state){
+            console.log(state.todoUnSuccess)
         },
         clearAll(state){
-            this.conFirm = confirm("Are you sure you want to delete all?")
-
-            if(this.conFirm === true){
+            if(confirm("Are you sure you want to delete all?")){
                 state.todoItemsUnSuccess.splice(0, 10000)
             }
         }

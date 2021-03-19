@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- 미완료 -->
     <TodoListOff></TodoListOff>
-    <!-- 완료 -->
+    <br>
+    <hr>
     <TodoListOn></TodoListOn>
   </div>
 </template>

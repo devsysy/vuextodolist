@@ -3,14 +3,12 @@
     <h1>{{message}}</h1>
     <TodoInput></TodoInput>
     <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
   </div>
 </template>
 
 <script>
 import TodoInput from "@/components/TodoInput";
 import TodoList from "@/components/TodoList";
-import TodoFooter from "@/components/TodoFooter";
 
 
 export default {
@@ -18,17 +16,18 @@ export default {
   components: {
     'TodoInput': TodoInput,
     'TodoList': TodoList,
-    'TodoFooter': TodoFooter,
   },
   data(){
     return{
-      message: 'TodoList App',
+      message: 'TodoList App, :)',
     }
   }
 }
 </script>
 
 <style>
-#app li{list-style: none;}
+#app li{
+  list-style: none;
+}
 
 </style>

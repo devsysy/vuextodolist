@@ -3,9 +3,10 @@
     <input
         type="text"
         placeholder="What to do today?"
-        v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>
-    <button type="button" @click.prevent="addTodoInput">List Add</button>
-    <button type="button" @click.prevent="chkChange">Delete</button>
+        v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>&nbsp;
+    <button type="button" @click.prevent="addTodoInput">List Add</button>&nbsp;
+    <button type="button" @click.prevent="addTodoInput">Done</button>&nbsp;
+    <button type="button" @click.prevent="addTodoInput">Remove?</button>
   </div>
 </template>
 
@@ -22,12 +23,15 @@ import {mapMutations, mapState} from "vuex";
     computed: {
       ...mapState({
         count: 'count',
-      })
+      }),
+      /*...mapGetters({
+        todoItemsDone: 'todoItemsDone'
+      })*/
     },
     methods: {
       ...mapMutations({
         addTodo : 'addTodo',
-        chkTodo : 'chkTodo'
+        chkTodo : 'chkTodo',
       }),
       addTodoInput: function(n){
         const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');
@@ -39,6 +43,7 @@ import {mapMutations, mapState} from "vuex";
             todoDate: today,
             todoBool: false,
             todoStyle: false,
+            todoDone: '미완료'
           })
           n.preventDefault()
         }else{
@@ -49,13 +54,10 @@ import {mapMutations, mapState} from "vuex";
       clearInput(){
         this.newTodoItem = '';
       },
-      chkChange(){
-        this.chkTodo()
-      }
     }
   }
 </script>
 
 <style scoped>
-
+ button{ height: 22px; border: none; color: #fff; background-color: #000; }
 </style>
