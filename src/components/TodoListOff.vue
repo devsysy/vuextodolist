@@ -14,13 +14,13 @@
         </span>
         {{ '(' + todoItem.todoDone + ') &nbsp;' + todoItem.todoDate }}
         <template v-if="index === 0"></template>
-        <button type="button" class="btnColor"
+        <button type="button" class="btnColor" @click="todoUpBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
                 v-else>
           ▲&nbsp;Up
         </button>
         <template v-if="index === todoItemsUnSuccess.length-1"></template>
-        <button type="button" class="btnColor"
+        <button type="button" class="btnColor" @click="todoDownBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
                 v-else>
           ▼&nbsp;down
@@ -44,7 +44,6 @@ export default {
   computed: {
     ...mapState({
       count: 'count',
-     // hiddenOk: 'hiddenOk'
     }),
     ...mapGetters({
       todoItemsUnSuccess : 'todoItemsUnSuccess',
@@ -63,10 +62,11 @@ export default {
 </script>
 
 <style scoped>
+li{ margin-bottom: 5px; }
   .todo {
     display: inline-block;
-    width: 150px;
-    border: 1px solid #000;
+    width: 100px;
+    border: 1px solid #666; border-radius: 0 0 8px 0;
   }
   .chkColor{ width: 15px; height: 15px; }
   .btnColor{ color: #fff; background-color: black; border: none; border-radius: 10px; }
