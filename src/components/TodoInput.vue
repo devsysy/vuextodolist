@@ -4,9 +4,10 @@
         type="text"
         placeholder="What to do today?"
         v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>&nbsp;
-    <button type="button" @click.prevent="addTodoInput">List Add</button>&nbsp;
-    <button type="button" @click.prevent="addTodoInput">Done</button>&nbsp;
-    <button type="button" @click.prevent="removeBtn">Remove?</button>
+    <button type="button" @click.prevent="addTodoInput">AddTodo</button>&nbsp;
+    <button type="button" @click.prevent="todoCompleteBtn">Complete</button>&nbsp;
+    <button type="button" @click.prevent="todoIncompleteBtn">Incomplete</button>&nbsp;
+    <button type="button" @click.prevent="removeBtn">Remove</button>
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import {mapMutations, mapState} from "vuex";
     computed: {
       ...mapState({
         count: 'count',
+        todoBool: 'todoBool'
       }),
       /*...mapGetters({
         todoItemsDone: 'todoItemsDone'
@@ -32,7 +34,9 @@ import {mapMutations, mapState} from "vuex";
       ...mapMutations({
         addTodo : 'addTodo',
         chkTodo : 'chkTodo',
-        removeBtn: 'removeBtn'
+        removeBtn: 'removeBtn',
+        todoCompleteBtn: 'todoCompleteBtn',
+        todoIncompleteBtn: 'todoIncompleteBtn'
       }),
       addTodoInput: function(n){
         const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');

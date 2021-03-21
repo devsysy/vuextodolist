@@ -12,7 +12,7 @@
               @click="decoTodo({index})">
           {{ todoItem.todoYou }}
         </span>
-        {{ '(' + todoItem.todoDone + ') &nbsp;' + todoItem.todoDate }}
+        {{ todoItem.todoDone + '&nbsp;' + todoItem.todoDate }}
         <template v-if="index === 0"></template>
         <button type="button" class="btnColor" @click="todoUpBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
@@ -38,7 +38,7 @@ export default {
   name: "TodoListOff",
   data() {
     return {
-      message: 'UnSuccess =>',
+      message: 'Todo Incomplete List',
     }
   },
   computed: {
@@ -62,11 +62,12 @@ export default {
 </script>
 
 <style scoped>
-li{ margin-bottom: 5px; }
+li{ margin-bottom: 3px; }
+h3{ color: #666666; }
   .todo {
     display: inline-block;
     width: 100px;
-    border: 1px solid #666; border-radius: 0 0 8px 0;
+    border: 1px solid #999; border-radius: 0 0 8px 0;
   }
   .chkColor{ width: 15px; height: 15px; }
   .btnColor{ color: #fff; background-color: black; border: none; border-radius: 10px; }

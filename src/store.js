@@ -7,66 +7,62 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         count: 1,
-        todoUnSuccess: [], //배열 리터럴
-        todoSuccess: [],
+        todoIncomplete: [], //배열 리터럴
+        todoComplete: [],
         hiddenOk: false,
-        todoDone: false,
+        todoBool: false
     },
     getters: {
-        todoItemsUnSuccess: state => state.todoUnSuccess,
-        todoItemsSuccess: state => state.todoSuccess,
-        //todoItemsFirst: state => state.todoUnSuccess.todoBool
-        //todoChkCount: state => state.todoUnSuccess.find(todoId => state.todoUnSuccess.todoId)
+        todoItemsUnSuccess: state => state.todoIncomplete,
+        todoItemsSuccess: state => state.todoComplete,
+        /*todoIncompleteById: state =>{
+         return state.filter(todoIncomplete => todoIncomplete.todoId)
+        }*/
     },
     mutations: {
+        //입력되는 배열이 최상단 이동
         addTodo(state, payload){
             state.count ++
-            state.todoUnSuccess = [payload, ...state.todoUnSuccess]
+            state.todoIncomplete = [payload, ...state.todoIncomplete]
         },
-
+        //컴포넌트 미완료 <=> 완료 취소선/배열 객체 최상단으로 이동
         decoTodo(state, payload){
-            state.todoUnSuccess[payload.index].todoStyle = true
+            state.todoIncomplete[payload.index].todoStyle = true
             //state.todoUnSuccess[payload.index].todoDone = '완료'
             //console.log(state.todoUnSuccess[payload.index].todoStyle)
 
-            state.todoSuccess = [state.todoUnSuccess[payload.index], ...state.todoSuccess]
+            state.todoComplete = [state.todoIncomplete[payload.index], ...state.todoComplete]
             //const idx = state.todoUnSuccess.indexOf(state.todoUnSuccess[payload.index].todoId, 1)
             //console.log(state.todoUnSuccess.splice(idx, 1))
-            state.todoUnSuccess.splice(payload.index,1)
+            state.todoIncomplete.splice(payload.index,1)
             //console.log(state.todoUnSuccess.splice(payload.index,1))
         },
         unDecoTodo(state, payload){
-            state.todoSuccess[payload.index].todoStyle = false
+            state.todoComplete[payload.index].todoStyle = false
             //state.todoSuccess[payload.index].todoDone = '미완료'
             //console.log(state.todoUnSuccess[payload.index].todoStyle)
 
-            state.todoUnSuccess = [state.todoSuccess[payload.index], ...state.todoUnSuccess]
-            state.todoSuccess.splice(payload.index,1)
+            state.todoIncomplete = [state.todoComplete[payload.index], ...state.todoIncomplete]
+            state.todoComplete.splice(payload.index,1)
         },
-
+        //해당 컴포넌트 => 완료(chkTodo), 미완료(chkUnTodo) 체크박스 클릭 이벤트 호출
         chkTodo(state, payload){
             //unSuccess 배열 체크 => 완료/미완료
-
-            state.todoDone = !state.todoDone
-
-            //console.log(state.todoDone)
-            if(state.todoDone){
-                state.todoUnSuccess[payload].todoDone = '완료'
+            if(state.todoIncomplete[payload].todoBool === true){
+                state.todoIncomplete[payload].todoDone = '완료'
             }else{
-                state.todoUnSuccess[payload].todoDone ='미완료'
+                state.todoIncomplete[payload].todoDone = '미완료'
             }
         },
         chkUnTodo(state, payload){
             //Success 배열 체크 => 완료/미완료
-            state.todoDone = !state.todoDone
-
-            if(state.todoDone){
-                state.todoSuccess[payload].todoDone = '완료'
+            if(state.todoComplete[payload].todoBool === true){
+                state.todoComplete[payload].todoDone = '완료'
             }else{
-                state.todoSuccess[payload].todoDone ='미완료'
+                state.todoComplete[payload].todoDone = '미완료'
             }
         },
-
+        //미완료 => 상(todoUpBtn),하(todoDownBtn) 버튼 클릭 이벤트 호출
         todoUpBtn(state, payload){
             //const unArr = state.todoUnSuccess[payload.index].length
             //unArr.copyWithin(복사한 값을 넣을 위치 인덱스번호, 카피할 시작번호, 어디까지 카피?)
@@ -81,9 +77,9 @@ export const store = new Vuex.Store({
             //state.todoUnSuccess = [upBtnSplice]
             //console.log(upBtnSplice)
 
-            state.todoUnSuccess.splice( (payload.index)-1,0,state.todoUnSuccess[payload.index])
-            state.todoUnSuccess.splice( (payload.index)+1, 0)
-            state.todoUnSuccess.splice( (payload.index)+1, 1)
+            state.todoIncomplete.splice( (payload.index)-1,0, state.todoIncomplete[payload.index])
+            state.todoIncomplete.splice( (payload.index)+1, 0)
+            state.todoIncomplete.splice( (payload.index)+1, 1)
 
             //state.todoUnSuccess.splice( payload.index,1)
 
@@ -98,25 +94,60 @@ export const store = new Vuex.Store({
 
         },
         todoDownBtn(state, payload){
-            state.todoUnSuccess.splice( (payload.index)+1,0,state.todoUnSuccess[payload.index])
-            state.todoUnSuccess.splice( (payload.index)-2,0)
-            state.todoUnSuccess.splice( (payload.index)-2,1)
-
-            console.log((payload.index)+1)
-            console.log((payload.index)-3)
-            //state.todoUnSuccess.splice( (payload.index)+1,2)
+            state.todoIncomplete.splice( (payload.index)+2,0, state.todoIncomplete[payload.index])
+            state.todoIncomplete.splice( (payload.index)-1,0)
+            state.todoIncomplete.splice( (payload.index),1)
         },
 
+        todoCompleteBtn(state){
+            console.log(state)
+        },
+        todoIncompleteBtn(state){
+            console.log(state)
+        },
 
-
-
+        //하나씩 선택 삭제만 가능...
         removeBtn(state){
-            if(confirm("Are you sure you want to delete all?")){
-                state.todoUnSuccess.splice(0, 10000)
+            //미완료 배열 체크 삭제
+            //반복문이 처음 돌아갈땐 체크 항목 삭제 o
+            //문제점 : 처음 체크 항목들 삭제 하고 난 뒤, 1,2개 밖에 삭제가 안됨
+
+            for(let i=0;i<=state.todoIncomplete.length-1;i++){
+
+                if(state.todoIncomplete[i].todoBool){
+                    //console.log(state.todoIncomplete[i])
+                    if(confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)){
+                        //const idVal = state.todoIncomplete[i].todoId
+                        //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
+                        //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
+                        //console.log(idVal)
+
+                        state.todoIncomplete.splice([i], 1)
+                        //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
+                        console.log([i])
+                    }
+
+                }
+
             }
-            if(confirm("Are you sure you want to delete all?")){
-                state.todoSuccess.splice(0, 10000)
-            }
+
+            //todoComplete배열 체크 삭제
+            /*for(let i=0;i<=state.todoComplete.length-1;i++){
+                if(state.todoComplete[i].todoBool){
+                    //console.log(state.todoIncomplete[i])
+                    if(confirm(`${state.todoComplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)){
+                        //const idVal = state.todoIncomplete[i].todoId
+                        //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
+                        //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
+                        //console.log(idVal)
+
+                        state.todoComplete.splice([i], 1)
+                        //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
+                        console.log([i])
+                    }
+                }
+            }*/
+
         }
     },
     actions: {

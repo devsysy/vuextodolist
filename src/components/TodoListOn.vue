@@ -28,7 +28,7 @@ export default {
   name: "TodoListOn",
   data() {
     return {
-      message: 'Success =>',
+      message: 'Todo Complete List',
     }
   },
   computed: {
@@ -51,10 +51,12 @@ export default {
 </script>
 
 <style scoped>
+li{ margin-bottom: 3px; }
+h3{ color: #666666; }
   .todo {
     display: inline-block;
     width: 100px;
-    border: none;
+    border: 1px solid #999; border-radius: 0 0 8px 0;
   }
   .chkColor{ width: 15px; height: 15px; }
   .btnColor{ color: #fff; background-color: black; border: none; border-radius: 10px; }
