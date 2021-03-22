@@ -1,8 +1,6 @@
 <template>
   <div>
     <TodoListOff></TodoListOff>
-    <br>
-    <hr>
     <TodoListOn></TodoListOn>
   </div>
 </template>

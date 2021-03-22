@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -10,14 +11,22 @@ export const store = new Vuex.Store({
         todoIncomplete: [], //배열 리터럴
         todoComplete: [],
         hiddenOk: false,
-        todoBool: false
+        todoBool: true,
+        todoArr: true,
+        todoOneArr: [],
     },
     getters: {
         todoItemsUnSuccess: state => state.todoIncomplete,
         todoItemsSuccess: state => state.todoComplete,
-        /*todoIncompleteById: state =>{
-         return state.filter(todoIncomplete => todoIncomplete.todoId)
-        }*/
+        getTodoOneArr: state => state.todoOneArr,
+        todoIncompleteLength: (state, getters) => {
+            return getters.todoItemsUnSuccess.length
+        },
+        todoIncompleteByBool: (state, getters) =>{
+         return getters.todoItemsUnSuccess.forEach(todoItem => {
+             if(todoItem.todoBool === true) state.arr = getters.todoIncompleteLength
+         })
+        }
     },
     mutations: {
         //입력되는 배열이 최상단 이동
@@ -99,15 +108,30 @@ export const store = new Vuex.Store({
             state.todoIncomplete.splice( (payload.index),1)
         },
 
-        todoCompleteBtn(state){
-            console.log(state)
+        //완료 리스트 보기
+        todoCompleteBtn(state, getters){
+            console.log(getters.todoIncompleteLength)
+            console.log(getters.todoIncompleteByBool)
+            console.log(state.todoBool)
+            //state.todoItemsUnSuccess = !state.todoItemsUnSuccess
+            state.todoBool = false
+            state.todoArr = true
+
         },
+        //미완료 리스트 보기
         todoIncompleteBtn(state){
-            console.log(state)
+            state.todoBool = true
+            state.todoArr = false
+        },
+        //리스트 전체보기
+        listAllBtn(state){
+            state.todoBool = true
+            state.todoArr = true
         },
 
-        //하나씩 선택 삭제만 가능...
+        //체크항목 삭제
         removeBtn(state){
+            console.log('before 반복분 : ' + state.todoBool)
             //미완료 배열 체크 삭제
             //반복문이 처음 돌아갈땐 체크 항목 삭제 o
             //문제점 : 처음 체크 항목들 삭제 하고 난 뒤, 1,2개 밖에 삭제가 안됨
@@ -116,23 +140,18 @@ export const store = new Vuex.Store({
 
                 if(state.todoIncomplete[i].todoBool){
                     //console.log(state.todoIncomplete[i])
-                    if(confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)){
-                        //const idVal = state.todoIncomplete[i].todoId
-                        //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-                        //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
-                        //console.log(idVal)
-
-                        state.todoIncomplete.splice([i], 1)
-                        //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
-                        console.log([i])
-                    }
-
+                    confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
+                    //const idVal = state.todoIncomplete[i].todoId
+                    //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
+                    //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
+                    //console.log(idVal)
+                    state.todoIncomplete.splice(i--, 1)
+                    //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
                 }
-
             }
 
             //todoComplete배열 체크 삭제
-            /*for(let i=0;i<=state.todoComplete.length-1;i++){
+            for(let i=0;i<=state.todoComplete.length-1;i++){
                 if(state.todoComplete[i].todoBool){
                     //console.log(state.todoIncomplete[i])
                     if(confirm(`${state.todoComplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)){
@@ -140,15 +159,42 @@ export const store = new Vuex.Store({
                         //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
                         //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
                         //console.log(idVal)
-
-                        state.todoComplete.splice([i], 1)
+                        state.todoComplete.splice(i--, 1)
                         //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
-                        console.log([i])
+                        console.log(state.todoComplete[i].length)
                     }
                 }
-            }*/
+            }
+            console.log('after 반복분 : ' + state.todoBool)
+            if(state.todoBool === false) alert('선택한 항목이 없습니다.')
 
-        }
+        },
+        //전체항목 삭제
+        resetBtn(state){
+            if(confirm("Are you sure you want to delete all?")){
+                state.todoIncomplete.splice(0, 10000)
+                state.todoComplete.splice(0, 10000)
+
+            }
+        },
+
+
+
+        //배열 하나로 완료, 미완료 v-if(true, false) 분기 처리
+        todoOne(state, payload){
+            state.count ++
+            state.todoOneArr = [payload, ...state.todoOneArr]
+        },
+        decoTodoOne(state, payload){
+            console.log(payload.index)
+            if(state.todoOneArr[payload.index].todoOneBool){
+                state.todoOneArr[payload.index].todoOneBool = false
+            }else{
+                state.todoOneArr[payload.index].todoOneBool = true
+            }
+
+        },
+
     },
     actions: {
 

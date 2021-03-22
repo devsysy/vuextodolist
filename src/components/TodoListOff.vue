@@ -1,8 +1,9 @@
 <template>
-  <section>
-    <h3>{{message}}</h3>
+  <section id="TodoListOff">
+
     <!-- 미완료 -->
-    <ul>
+    <ul v-if="todoBool">
+      <li class="grayColor">{{message}}</li><br>
       <li v-for="(todoItem, index) in todoItemsUnSuccess" v-bind:key="index">
         <input type="checkbox" class="chkColor"
                v-model="todoItem.todoBool"
@@ -12,19 +13,19 @@
               @click="decoTodo({index})">
           {{ todoItem.todoYou }}
         </span>
-        {{ todoItem.todoDone + '&nbsp;' + todoItem.todoDate }}
+        {{ todoItem.todoDone + '&nbsp;' + todoItem.todoDate + '&nbsp;'}}
         <template v-if="index === 0"></template>
-        <button type="button" class="btnColor" @click="todoUpBtn({index})"
+        <b-button type="button" class="btnColor" @click="todoUpBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
                 v-else>
           ▲&nbsp;Up
-        </button>
+        </b-button>
         <template v-if="index === todoItemsUnSuccess.length-1"></template>
-        <button type="button" class="btnColor" @click="todoDownBtn({index})"
+        <b-button type="button" class="btnColor" @click="todoDownBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
                 v-else>
           ▼&nbsp;down
-        </button>
+        </b-button>
       </li>
     </ul>
   </section>
@@ -44,6 +45,7 @@ export default {
   computed: {
     ...mapState({
       count: 'count',
+      todoBool: 'todoBool'
     }),
     ...mapGetters({
       todoItemsUnSuccess : 'todoItemsUnSuccess',
@@ -62,15 +64,18 @@ export default {
 </script>
 
 <style scoped>
-li{ margin-bottom: 3px; }
-h3{ color: #666666; }
+  li{ margin-bottom: 3px; }
+  h3{ color: #666666; }
   .todo {
     display: inline-block;
     width: 100px;
     border: 1px solid #999; border-radius: 0 0 8px 0;
   }
+  .grayColor{ color: #666; font-size: 18px; }
   .chkColor{ width: 15px; height: 15px; }
   .btnColor{ color: #fff; background-color: black; border: none; border-radius: 10px; }
   .hidden{ display: none; width: 5px; height: 5px; background-color: cadetblue; }
   .active{ text-decoration: line-through; }
+
+  #TodoListOff .btn-secondary{ height: 16px; line-height: 2px; margin-right: 2px; background-color: #fff; color: #000; border: 1px solid #000; box-sizing: border-box; border-radius: 10px; font-size: 15px; }
 </style>

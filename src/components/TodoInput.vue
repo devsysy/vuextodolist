@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <input
-        type="text"
-        placeholder="What to do today?"
-        v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>&nbsp;
-    <button type="button" @click.prevent="addTodoInput">AddTodo</button>&nbsp;
-    <button type="button" @click.prevent="todoCompleteBtn">Complete</button>&nbsp;
-    <button type="button" @click.prevent="todoIncompleteBtn">Incomplete</button>&nbsp;
-    <button type="button" @click.prevent="removeBtn">Remove</button>
+  <div id="todoInput">
+    <input class="inputClass"
+           type="text"
+           placeholder="배열 2개 input"
+           v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>&nbsp;
+    <b-button type="button" @click.prevent="addTodoInput">AddTodo</b-button><br>
+    <b-button type="button" @click.prevent="todoCompleteBtn">Complete</b-button>&nbsp;
+    <b-button type="button" @click.prevent="todoIncompleteBtn">Incomplete</b-button>&nbsp;
+    <b-button type="button" @click.prevent="listAllBtn">ListAll</b-button>&nbsp;
+    <b-button type="button" class="btnColor" @click.prevent="removeBtn">Remove</b-button>&nbsp;
+    <b-button type="button" class="btnColor" @click.prevent="resetBtn">Reset</b-button>
   </div>
 </template>
 
@@ -36,7 +38,9 @@ import {mapMutations, mapState} from "vuex";
         chkTodo : 'chkTodo',
         removeBtn: 'removeBtn',
         todoCompleteBtn: 'todoCompleteBtn',
-        todoIncompleteBtn: 'todoIncompleteBtn'
+        todoIncompleteBtn: 'todoIncompleteBtn',
+        resetBtn: 'resetBtn',
+        listAllBtn: 'listAllBtn'
       }),
       addTodoInput: function(n){
         const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');
@@ -64,5 +68,8 @@ import {mapMutations, mapState} from "vuex";
 </script>
 
 <style scoped>
- button{ height: 22px; border: none; color: #fff; background-color: #000; }
+  #todoInput .inputClass{ padding-left: 5px; box-sizing: border-box; margin-bottom: 10px; border: 2px solid #000; border-radius: 0 0 8px 0; }
+  #todoInput .btn-secondary{ height: 30px; line-height: 18px; border-radius: 0; }
+  #todoInput .btnColor{ background-color: red; }
+  #todoInput button{ height: 22px; border: none; color: #fff; background-color: #000; border-radius: 8px; }
 </style>
