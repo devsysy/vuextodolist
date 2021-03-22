@@ -1,20 +1,21 @@
 <template>
   <section>
+    <br>
     <p className="grayColor">Todo Incomplete List</p>
-    <ul v-for="(todoList, index) in getTodoOneArr" v-bind:key="index+100">
+    <ul v-for="(todoList, index) in getTodoOneArr" :key="index+100">
       <li v-if="!todoList.todoOneBool">
-        {{ todoList.todoNum + '&nbsp;'}}
-        <span className="todo" @click="decoTodoOne({index})">
+        인덱스로 노출
+        <span className="todo" @click="decoTodoOneM(index)">
         {{ todoList.todoUser }}
       </span>
       </li>
     </ul>
     <br>
-    <p className="grayColor">Todo Complete List</p><br>
-    <ul v-for="(todoList, index2) in getTodoOneArr" v-bind:key="index2 +200">
+    <p className="grayColor">Todo Complete List</p>
+    <ul v-for="(todoList, index2) in getTodoOneArr" :key="index2 +200">
       <li v-if="todoList.todoOneBool">
-        {{ todoList.todoNum + '&nbsp;' }}
-        <span className="todo" @click="decoTodoOne">
+        인덱스로 노출
+        <span className="todo" @click="decoTodoOneM(index2)">
         {{ todoList.todoUser }}
       </span>
       </li>
@@ -23,19 +24,11 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations, mapState} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "TodoOne",
-  data() {
-    return {
-      message: 'Todo List One',
-    }
-  },
   computed: {
-    ...mapState({
-      count: 'count',
-    }),
     ...mapGetters({
       getTodoOneArr: 'getTodoOneArr'
     })
@@ -44,6 +37,9 @@ export default {
     ...mapMutations({
       decoTodoOne: 'decoTodoOne',
     }),
+    decoTodoOneM(index){
+      this.decoTodoOne({change: {...this.getTodoOneArr[index], todoOneBool : !this.getTodoOneArr[index].todoOneBool}, index : index} )
+    }
   }
 }
 </script>

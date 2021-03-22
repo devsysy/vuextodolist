@@ -186,13 +186,8 @@ export const store = new Vuex.Store({
             state.todoOneArr = [payload, ...state.todoOneArr]
         },
         decoTodoOne(state, payload){
-            console.log(payload.index)
-            if(state.todoOneArr[payload.index].todoOneBool){
-                state.todoOneArr[payload.index].todoOneBool = false
-            }else{
-                state.todoOneArr[payload.index].todoOneBool = true
-            }
-
+            console.log(payload)
+            state.todoOneArr[payload.index] = payload.change
         },
 
     },

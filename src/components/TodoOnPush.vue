@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import {mapMutations} from "vuex";
 
 export default {
   name: "TodoInput",
@@ -18,11 +18,6 @@ export default {
       newTodo: '',
     }
   },
-  computed: {
-    ...mapState({
-      count: 'count',
-    })
-  },
   methods: {
     ...mapMutations({
       todoOne: 'todoOne'
@@ -30,19 +25,13 @@ export default {
     addTodoOne: function(n){
       if(this.newTodo !== ''){
         this.todoOne({
-          todoNum: this.count,
           todoUser: this.newTodo,
           todoOneBool: false
         })
         n.preventDefault()
-      }else{
-        alert('Nothing to do today?!')
-      }
-      this.clearInput();
-    },
-    clearInput(){
+      }else alert('Nothing to do today?!')
       this.newTodo = '';
-    },
+    }
   }
 }
 </script>
