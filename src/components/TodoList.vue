@@ -15,16 +15,6 @@ import TodoListOn from "./TodoListOn";
       'TodoListOff': TodoListOff,
       'TodoListOn': TodoListOn,
     },
-    data(){
-      return{
-
-      }
-    },
-    methods: {
-      /*removeTodo: function(todoItem, i){
-        this.$store.commit('removeTodo',{todoItem, i});
-      },*/
-    }
   }
 </script>
 

@@ -13,7 +13,6 @@ export const store = new Vuex.Store({
         todoBool: true,
         todoArr: true,
         todoOneArr: [], //배열 1개
-        chkYes:'Y'
     },
     getters: {
         todoItemsUnSuccess: state => state.todoIncomplete,
@@ -111,27 +110,46 @@ export const store = new Vuex.Store({
         //removeBtn() 체크항목 삭제
         removeBtn(state){
             //미완료 체크박스 true값 인덱스 삭제
-            for(let i=0;i<=state.todoIncomplete.length-1;i++){
+            // for(let i=0;i<=state.todoIncomplete.length-1;i++){
+            //     if(state.todoIncomplete[i].todoBool){
+            //         //console.log(state.todoIncomplete[i])
+            //         confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
+            //         //const idVal = state.todoIncomplete[i].todoId
+            //         //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
+            //         //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
+            //         //console.log(idVal)
+            //
+            //
+            //         // 1. splice ?
+            //         // 2.
+            //
+            //         // state.todoIncomplete.splice(i--, 1)
+            //         state.todoIncomplete.splice(i, 1)
+            //         // i -= 1
+            //
+            //
+            //
+            //         //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
+            //         /*if(!state.todoIncomplete[i].todoBool){
+            //             return alert('선택한 항목이 없습니다.')
+            //         }*/
+            //     }
+            // }
+
+            for(let i=state.todoIncomplete.length-1;i>=0;i--){
                 if(state.todoIncomplete[i].todoBool){
-                    //console.log(state.todoIncomplete[i])
-                    confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-                    //const idVal = state.todoIncomplete[i].todoId
-                    //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-                    //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
-                    //console.log(idVal)
-                    state.todoIncomplete.splice(i--, 1)
-                    //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
-                    /*if(!state.todoIncomplete[i].todoBool){
-                        return alert('선택한 항목이 없습니다.')
-                    }*/
+                    confirm(`${state.todoIncomplete[i].todoId}`)
+                    state.todoIncomplete.splice(i, 1)
                 }
             }
+
+
             //완료 체크박스 true값 인덱스 삭제, 1개만 삭제 가능한 부분 해결하기
             for(let i=0;i<=state.todoComplete.length-1;i++){
                 if(state.todoComplete[i].todoBool){
                     //console.log(state.todoIncomplete[i])
                     confirm(`${state.todoComplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-                    state.todoComplete.splice(i++, 1)
+                    state.todoComplete.splice(i--, 1)
                     console.log(state.todoComplete[i].length)
                 }
             }
@@ -154,9 +172,11 @@ export const store = new Vuex.Store({
             state.todoOneArr = [payload, ...state.todoOneArr]
         },
         decoTodoOne(state, payload){
-            state.todoOneArr[payload.index].todoOneBool = payload.change.todoOneBool
+            //state.todoOneArr[payload.index].todoOneBool = payload.change.todoOneBool
             //console.log(state.todoOneArr[payload.index].todoOneBool)
             //console.log(payload.change.todoOneBool)
+
+            Vue.set(state.todoOneArr[payload.index], 'todoOneBool', payload.change.todoOneBool)
         },
 
     },
