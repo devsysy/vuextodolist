@@ -7,14 +7,14 @@
       <li v-for="(todoItem, index) in todoItemsUnSuccess" :key="index">
         <input type="checkbox" class="chkColor"
                v-model="todoItem.todoBool"
-               @change="chkUnTodo(index)">
+               @change="chkTodoYes(index)">
         {{ todoItem.todoId }}
         <span class="todo"
               @click="decoTodo({index})">
           {{ todoItem.todoYou }}
         </span>
-        {{ todoItem.todoDone + '&nbsp;' + todoItem.todoDate + '&nbsp;'}}
-        <template v-if="index === 0"></template>
+        {{ todoNo + todoItem.todoDate }}
+<!--        <template v-if="index === 0"></template>
         <b-button type="button" class="btnColor" @click="todoUpBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
                 v-else>▲&nbsp;Up
@@ -23,7 +23,7 @@
         <b-button type="button" class="btnColor" @click="todoDownBtn({index})"
                 v-bind:class="{hidden: !todoItem.todoBool}"
                 v-else>▼&nbsp;down
-        </b-button>
+        </b-button>-->
       </li>
     </ul>
   </section>
@@ -38,12 +38,13 @@ export default {
   data() {
     return {
       message: '[미완료]',
+      todoNo: '(미완료)'
     }
   },
   computed: {
     ...mapState({
       count: 'count',
-      todoBool: 'todoBool'
+      todoBool: 'todoBool',
     }),
     ...mapGetters({
       todoItemsUnSuccess : 'todoItemsUnSuccess',
@@ -52,9 +53,7 @@ export default {
   methods: {
     ...mapMutations({
       decoTodo: 'decoTodo',
-      chkUnTodo: 'chkUnTodo',
-      todoUpBtn: 'todoUpBtn',
-      todoDownBtn: 'todoDownBtn',
+      chkTodoYes: 'chkTodoYes'
     }),
   }
 }

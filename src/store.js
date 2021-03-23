@@ -8,10 +8,11 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         count: 1,
-        todoIncomplete: [], //배열 2개 배열 리터럴
+        todoIncomplete: [], //배열 2개 - 배열 리터럴 선언
         todoComplete: [], //배열 2개
         todoBool: true,
         todoArr: true,
+        active: false,
         todoOneArr: [], //배열 1개
         test: ''
     },
@@ -19,16 +20,6 @@ export const store = new Vuex.Store({
         todoItemsUnSuccess: state => state.todoIncomplete,
         todoItemsSuccess: state => state.todoComplete,
         getTodoOneArr: state => state.todoOneArr,
-        //미완료 배열의 길이 가져오기 시도
-        todoIncompleteLength: (state, getters) => {
-            return getters.todoItemsUnSuccess.length
-        },
-        //미완료 배열 todoBool키의 값이 true인 아이를 빈 배열(arr)에 넣고 그 길이 가져오기 시도
-        todoIncompleteByBool: (state, getters) =>{
-         return getters.todoItemsUnSuccess.forEach(todoItem => {
-             if(todoItem.todoBool === true) state.arr = getters.todoIncompleteLength
-         })
-        }
     },
     mutations: {
         //Todoinput.vue에서 미완료 배열에 들어갈 객체 상위로 들어감, 객체안 todoId : count++ 넘버 처리
@@ -40,64 +31,42 @@ export const store = new Vuex.Store({
         decoTodo(state, payload){
             state.todoIncomplete[payload.index].todoStyle = true
             state.todoComplete = [state.todoIncomplete[payload.index], ...state.todoComplete]
-            //const idx = state.todoUnSuccess.indexOf(state.todoUnSuccess[payload.index].todoId, 1)
-            //console.log(state.todoUnSuccess.splice(idx, 1))
             state.todoIncomplete.splice(payload.index,1)
-            //console.log(state.todoUnSuccess.splice(payload.index,1))
         },
         //완료 배열에서 스타일 없어지며, 선택한 인덱스 삭제 후 미완료 배열 상위로 이동
         unDecoTodo(state, payload){
             state.todoComplete[payload.index].todoStyle = false
-            //if(state.todoIncomplete[payload].todoBool === false) state.todoIncomplete[payload].todoDone = ''
             state.todoIncomplete = [state.todoComplete[payload.index], ...state.todoIncomplete]
             state.todoComplete.splice(payload.index,1)
         },
-        
-        //chkTodo(), chkUnTodo() 체크박스 클릭 => 완료/미완료
-        chkUnTodo(state, payload){
-            //todoDone 초기값 = '미완료'
-            //미완료 배열
-            if(state.todoIncomplete[payload].todoBool === true) state.todoIncomplete[payload].todoDone = '완료'
-            else state.todoIncomplete[payload].todoDone = '미완료'
-        },
-        chkTodo(state, payload){
-            //완료 배열
-            if(state.todoComplete[payload].todoBool === true) state.todoComplete[payload].todoDone = '완료'
-            else state.todoComplete[payload].todoDone = '미완료'
-        },
-        
-        //todoUpBtn() UP 버튼
-        todoUpBtn(state, payload){
-            //const unArr = state.todoUnSuccess[payload.index].length
-            //unArr.copyWithin(복사한 값을 넣을 위치 인덱스번호, 카피할 시작번호, 어디까지 카피?)
-            //console.log((payload.index)-1) //복사한 값을 넣을 위치 인덱스번호
-            //const test = unArr.copyWithin((payload.index)-1, payload.index, -1)
-            //state.todoUnSuccess = [...state.todoUnSuccess, test]
-            //console.log(state.todoUnSuccess)
-            //console.log(payload.index)
-            //const upBtnSplice = state.todoUnSuccess.splice( payload.index,-1, state.todoUnSuccess[payload.index])
-            //const upBtnSpliceAdd = state.todoUnSuccess.splice(payload.index,1, payload.index)
-            //state.todoUnSuccess = [upBtnSplice]
-            //console.log(upBtnSplice)
-            state.todoIncomplete.splice( (payload.index)-1,0, state.todoIncomplete[payload.index])
+
+        //todoUpBtn() UP 버튼 - 이동
+        todoUpBtn(state){
+            console.log(state)
+            /*state.todoIncomplete.splice( (payload.index)-1,0, state.todoIncomplete[payload.index])
             state.todoIncomplete.splice( (payload.index)+1, 0)
-            state.todoIncomplete.splice( (payload.index)+1, 1)
+            state.todoIncomplete.splice( (payload.index)+1, 1)*/
         },
-        //todoDownBtn() DOWN 버튼
-        todoDownBtn(state, payload){
-            state.todoIncomplete.splice( (payload.index)+2,0, state.todoIncomplete[payload.index])
+        //todoDownBtn() DOWN 버튼 - 이동
+        todoDownBtn(state){
+            console.log(state)
+            /*state.todoIncomplete.splice( (payload.index)+2,0, state.todoIncomplete[payload.index])
             state.todoIncomplete.splice( (payload.index)-1,0)
-            state.todoIncomplete.splice( (payload.index),1)
+            state.todoIncomplete.splice( (payload.index),1)*/
         },
+
+        chkTodoYes(state, payload){
+            console.log('ddf')
+            console.log(state)
+            console.log(payload)
+            state.active = !state.active
+            //조건 걸기
+        },
+
 
         //todoCompleteBtn() 완료만 보기
         todoCompleteBtn(state){
-            //console.log(getters.todoIncompleteLength)
-            //console.log(getters.todoIncompleteByBool)
-            //console.log(state.todoBool)
-            //state.todoItemsUnSuccess = !state.todoItemsUnSuccess
             state.todoBool = false, state.todoArr = true
-
         },
         //todoIncompleteBtn() 미완료만 보기
         todoIncompleteBtn(state){
@@ -108,55 +77,27 @@ export const store = new Vuex.Store({
             state.todoBool = true, state.todoArr = true
         },
 
-        //removeBtn() 체크항목 삭제
+        //removeBtn() 체크항목 삭제 - alert 해결하기
         removeBtn(state){
-            //미완료 체크박스 true값 인덱스 삭제
-            // for(let i=0;i<=state.todoIncomplete.length-1;i++){
-            //     if(state.todoIncomplete[i].todoBool){
-            //         //console.log(state.todoIncomplete[i])
-            //         confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-            //         //const idVal = state.todoIncomplete[i].todoId
-            //         //confirm(`${state.todoIncomplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-            //         //const idVal = state.todoIncomplete.indexOf(state.todoIncomplete[i].todoId)
-            //         //console.log(idVal)
-            //
-            //
-            //         // 1. splice ?
-            //         // 2.
-            //
-            //         // state.todoIncomplete.splice(i--, 1)
-            //         state.todoIncomplete.splice(i, 1)
-            //         // i -= 1
-            //
-            //
-            //
-            //         //console.log(state.todoIncomplete.indexOf(state.todoIncomplete[i]))
-            //         /*if(!state.todoIncomplete[i].todoBool){
-            //             return alert('선택한 항목이 없습니다.')
-            //         }*/
-            //     }
-            // }
+            // 1. splice ??? 이해하고 사용하기
+            // 2. 배열 splice로 원하는 걸 뺄 때 역순에서 처리하면 좋음(삭제된 배열 자리에 그 다음 배열이 들어와서 인덱스번호가 바뀌기 때문)
+            let arrLength =  state.todoIncomplete.length-1
 
-            for(let i=state.todoIncomplete.length-1;i>=0;i--){
+            for(let i=arrLength;i>=0;i--){
                 if(state.todoIncomplete[i].todoBool){
-                    confirm(`${state.todoIncomplete[i].todoId}`)
+                    confirm(`${state.todoIncomplete[i].todoId}번 선택한 항목을 삭제 하시겠습니까?`)
                     state.todoIncomplete.splice(i, 1)
                 }
             }
 
-            //완료 체크박스 true값 인덱스 삭제, 1개만 삭제 가능한 부분 해결하기
-            for(let i=0;i<=state.todoComplete.length-1;i++){
+            for(let i=arrLength;i>=0;i--){
                 if(state.todoComplete[i].todoBool){
-                    //console.log(state.todoIncomplete[i])
-                    confirm(`${state.todoComplete[i].todoId} 선택한 항목을 삭제 하시겠습니까?`)
-                    state.todoComplete.splice(i--, 1)
-                    console.log(state.todoComplete[i].length)
+                    confirm(`${state.todoComplete[i].todoId}번 선택한 항목을 삭제 하시겠습니까?`)
+                    state.todoComplete.splice(i, 1)
                 }
             }
             //체크박스 false일 경우, 경고창 해결하기
             //if(state.todoBool === false) alert('선택된 항목이 없습니다.')
-
-
         },
         //resetBtn() 전체 다 삭제
         resetBtn(state){

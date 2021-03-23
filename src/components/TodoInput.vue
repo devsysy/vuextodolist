@@ -9,7 +9,9 @@
     <b-button type="button" @click.prevent="todoIncompleteBtn">미완료</b-button>&nbsp;
     <b-button type="button" @click.prevent="listAllBtn">All</b-button>&nbsp;
     <b-button type="button" class="btnColor" @click.prevent="removeBtn">Remove</b-button>&nbsp;
-    <b-button type="button" class="btnColor" @click.prevent="resetBtn">Reset</b-button>
+    <b-button type="button" class="btnColor" @click.prevent="resetBtn">Reset</b-button><br>
+    <b-button type="button" class="moveColor" @click="chkTodoYes" :class="{hidden: !active}">▲&nbsp;Up</b-button>&nbsp;
+    <b-button type="button" class="moveColor" @click="chkTodoYes" :class="{hidden: !active}">▼&nbsp;down</b-button>
   </div>
 </template>
 
@@ -26,6 +28,7 @@ import {mapMutations, mapState} from "vuex";
     computed: {
       ...mapState({
         count: 'count',
+        active: 'active'
       }),
     },
     methods: {
@@ -36,7 +39,8 @@ import {mapMutations, mapState} from "vuex";
         todoCompleteBtn: 'todoCompleteBtn',
         todoIncompleteBtn: 'todoIncompleteBtn',
         resetBtn: 'resetBtn',
-        listAllBtn: 'listAllBtn'
+        listAllBtn: 'listAllBtn',
+        chkTodoYes: 'chkTodoYes',
       }),
       addTodoInput: function(n){
         const today = this.$moment().format('YYYY-MM-DD HH:mm:ss');
@@ -48,7 +52,6 @@ import {mapMutations, mapState} from "vuex";
             todoDate: today,
             todoBool: false,
             todoStyle: false,
-            todoDone: '미완료'
           })
           n.preventDefault()
         }else{
@@ -64,5 +67,7 @@ import {mapMutations, mapState} from "vuex";
   #todoInput .inputClass{ padding-left: 5px; box-sizing: border-box; margin-bottom: 10px; border: 2px solid #000; border-radius: 0 0 8px 0; }
   #todoInput .btn-secondary{ position: relative; top: -2px; height: 30px; line-height: 18px; }
   #todoInput .btnColor{ background-color: red; }
+  #todoInput .moveColor{ background-color: gray; margin-top: 10px; }
+  .hidden{ display: none; }
   #todoInput button{ height: 22px; border: none; color: #fff; background-color: #000; border-radius: 8px; }
 </style>

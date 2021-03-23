@@ -6,15 +6,14 @@
       <li>{{message}}</li><br>
       <li v-for="(todoItem, index) in todoItemsSuccess" :key="index">
         <input type="checkbox" class="chkColor"
-               v-model="todoItem.todoBool"
-               @change="chkTodo(index)">
+               v-model="todoItem.todoBool">
         {{ todoItem.todoId + '. &nbsp;' }}
         <span class="todo"
               v-bind:class="{active: todoItem.todoStyle}"
               @click="unDecoTodo({index})">
           {{ todoItem.todoYou }}
         </span>
-        {{ todoItem.todoDone + '&nbsp;' + todoItem.todoDate }}
+        {{ todoYes + todoItem.todoDate }}
       </li>
     </ul>
   </section>
@@ -29,6 +28,7 @@ export default {
   data() {
     return {
       message: '[완료]',
+      todoYes: '(완료)'
     }
   },
   computed: {
@@ -43,7 +43,7 @@ export default {
   methods: {
     ...mapMutations({
       unDecoTodo: 'unDecoTodo',
-      chkTodo: 'chkTodo',
+      chkTodoYes: 'chkTodoYes'
     }),
   }
 }
