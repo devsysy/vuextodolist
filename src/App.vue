@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <h1>{{message}}</h1>
+    <h2>{{message}}</h2><br>
     <TodoInput></TodoInput><br>
     <TodoList></TodoList>
-    <h2>TodoListOne App</h2>
+    <hr>
+    <h2>TodoListOne App</h2><br>
     <TodoOnPush></TodoOnPush>
     <TodoOne></TodoOne>
   </div>
@@ -26,16 +27,13 @@ export default {
   },
   data(){
     return{
-      message: 'TodoList App, :)',
+      message: "TodoList App, '-'",
     }
   }
 }
 </script>
 
 <style>
-#app{ margin-top: 30px; margin-left: 30px; }
-#app li{ list-style: none; }
-#app h1{ margin-bottom: 20px; }
-
-
+  #app{ margin-top: 10px; margin-left: 10px; }
+  #app li{ list-style: none; }
 </style>

@@ -4,10 +4,10 @@
            type="text"
            placeholder="배열 2개 input"
            v-model.trim="newTodoItem" v-on:keypress.enter="addTodoInput" autofocus>&nbsp;
-    <b-button type="button" @click.prevent="addTodoInput">AddTodo</b-button><br>
-    <b-button type="button" @click.prevent="todoCompleteBtn">Complete</b-button>&nbsp;
-    <b-button type="button" @click.prevent="todoIncompleteBtn">Incomplete</b-button>&nbsp;
-    <b-button type="button" @click.prevent="listAllBtn">ListAll</b-button>&nbsp;
+    <b-button type="button" @click.prevent="addTodoInput">Add</b-button><br>
+    <b-button type="button" @click.prevent="todoCompleteBtn">완료</b-button>&nbsp;
+    <b-button type="button" @click.prevent="todoIncompleteBtn">미완료</b-button>&nbsp;
+    <b-button type="button" @click.prevent="listAllBtn">All</b-button>&nbsp;
     <b-button type="button" class="btnColor" @click.prevent="removeBtn">Remove</b-button>&nbsp;
     <b-button type="button" class="btnColor" @click.prevent="resetBtn">Reset</b-button>
   </div>
@@ -26,11 +26,7 @@ import {mapMutations, mapState} from "vuex";
     computed: {
       ...mapState({
         count: 'count',
-        todoBool: 'todoBool'
       }),
-      /*...mapGetters({
-        todoItemsDone: 'todoItemsDone'
-      })*/
     },
     methods: {
       ...mapMutations({
@@ -58,9 +54,6 @@ import {mapMutations, mapState} from "vuex";
         }else{
           alert('Nothing to do today?!')
         }
-        this.clearInput();
-      },
-      clearInput(){
         this.newTodoItem = '';
       },
     }
@@ -69,7 +62,7 @@ import {mapMutations, mapState} from "vuex";
 
 <style scoped>
   #todoInput .inputClass{ padding-left: 5px; box-sizing: border-box; margin-bottom: 10px; border: 2px solid #000; border-radius: 0 0 8px 0; }
-  #todoInput .btn-secondary{ height: 30px; line-height: 18px; border-radius: 0; }
+  #todoInput .btn-secondary{ position: relative; top: -2px; height: 30px; line-height: 18px; }
   #todoInput .btnColor{ background-color: red; }
   #todoInput button{ height: 22px; border: none; color: #fff; background-color: #000; border-radius: 8px; }
 </style>
