@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
         todoBool: true,
         todoArr: true,
         todoOneArr: [], //배열 1개
+        test: ''
     },
     getters: {
         todoItemsUnSuccess: state => state.todoIncomplete,
@@ -142,7 +143,6 @@ export const store = new Vuex.Store({
                     state.todoIncomplete.splice(i, 1)
                 }
             }
-
 
             //완료 체크박스 true값 인덱스 삭제, 1개만 삭제 가능한 부분 해결하기
             for(let i=0;i<=state.todoComplete.length-1;i++){
