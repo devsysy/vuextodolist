@@ -70,11 +70,20 @@ export const store = new Vuex.Store({
 
 
         //todoCompleteBtn() 완료만 보기
-        todoCompleteBtn(state){ state.todoBool = false, state.todoArr = true },
+        todoCompleteBtn(state){
+            state.todoBool = false
+            state.todoArr = true
+        },
         //todoIncompleteBtn() 미완료만 보기
-        todoIncompleteBtn(state){ state.todoBool = true, state.todoArr = false },
+        todoIncompleteBtn(state){
+            state.todoBool = true
+            state.todoArr = false
+        },
         //listAllBtn() 배열 전체 보기
-        listAllBtn(state){ state.todoBool = true, state.todoArr = true },
+        listAllBtn(state){
+            state.todoBool = true
+            state.todoArr = true
+        },
 
         //removeBtn() 체크항목 삭제 - alert 해결하기
         removeBtn(state){
@@ -112,10 +121,6 @@ export const store = new Vuex.Store({
             state.todoOneArr = [payload, ...state.todoOneArr]
         },
         decoTodoOne(state, payload){
-            //state.todoOneArr[payload.index].todoOneBool = payload.change.todoOneBool
-            //console.log(state.todoOneArr[payload.index].todoOneBool)
-            //console.log(payload.change.todoOneBool)
-
             Vue.set(state.todoOneArr[payload.index], 'todoOneBool', payload.change.todoOneBool)
         },
 
