@@ -56,26 +56,25 @@ export const store = new Vuex.Store({
         },
 
         chkTodoYes(state, payload){
-            console.log('ddf')
-            console.log(state)
-            console.log(payload)
-            state.active = !state.active
+
+            //state.active = !state.active
             //조건 걸기
+            //console.log(state.todoIncomplete.length-1)
+            if(state.todoIncomplete[payload].todoBool) {
+                console.log(state.todoIncomplete.length)
+                state.active = true
+            }else{
+                state.active = false
+            }
         },
 
 
         //todoCompleteBtn() 완료만 보기
-        todoCompleteBtn(state){
-            state.todoBool = false, state.todoArr = true
-        },
+        todoCompleteBtn(state){ state.todoBool = false, state.todoArr = true },
         //todoIncompleteBtn() 미완료만 보기
-        todoIncompleteBtn(state){
-            state.todoBool = true, state.todoArr = false
-        },
+        todoIncompleteBtn(state){ state.todoBool = true, state.todoArr = false },
         //listAllBtn() 배열 전체 보기
-        listAllBtn(state){
-            state.todoBool = true, state.todoArr = true
-        },
+        listAllBtn(state){ state.todoBool = true, state.todoArr = true },
 
         //removeBtn() 체크항목 삭제 - alert 해결하기
         removeBtn(state){
